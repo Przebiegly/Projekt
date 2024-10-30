@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="categories">
+        <div class="category">Kategoria 1</div>
+        <div class="category">Kategoria 2</div>
+        <div class="category">Kategoria 3</div>
+        <div class="category">Kategoria 4</div>
+    </div>
+
+    <div class="drop-areas">
+        <div class="drop-area" ondrop="drop(event)" ondragover="allowDrop(event)">
+        </div>
+        <div class="drop-area" ondrop="drop(event)" ondragover="allowDrop(event)">
+        </div>
+        <div class="drop-area" ondrop="drop(event)" ondragover="allowDrop(event)">
+        </div>
+        <div class="drop-area" ondrop="drop(event)" ondragover="allowDrop(event)">
+        </div>
+    </div>
+
+    <div class="items">
+        <div class="item" draggable="true" ondragstart="drag(event)">Element 1</div>
+        <div class="item" draggable="true" ondragstart="drag(event)">Element 2</div>
+        <div class="item" draggable="true" ondragstart="drag(event)">Element 3</div>
+        <div class="item" draggable="true" ondragstart="drag(event)">Element 4</div>
+        <div class="item" draggable="true" ondragstart="drag(event)">Element 5</div>
+
+    </div>
+</div>
+
+<script>
+    function allowDrop(event) {
+        event.preventDefault();
+    }
+
+    function drag(event) {
+        event.dataTransfer.setData("text/plain", event.target.outerHTML);
+        event.target.classList.add("dragging");
+    }
+
+    function drop(event) {
+        event.preventDefault();
+        const data = event.dataTransfer.getData("text/plain");
+        
+        const draggedElement = document.querySelector(".dragging");
+        if (draggedElement) {
+            draggedElement.remove();
+        }
+        
+        event.target.insertAdjacentHTML("beforeend", data);
+        document.querySelector(".dragging").classList.remove("dragging");
+    }
+</script>
+
+</body>
+</html>
